@@ -9,14 +9,21 @@ public class Card {
     @GeneratedValue
     @Column(name = "id")
     private long id;
-    @Column(name = "cardNumber")
+    @Column(name = "card_Number")
     private String cardNumber;
-    @Column(name = "balance")
-    private double balance;
 
-    public Card(String cardNumber, double balance) {
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", cardNumber='" + cardNumber + '\'' +
+                '}';
+    }
+
+    public Card(int id, String cardNumber) {
+        this.id = id;
         this.cardNumber = cardNumber;
-        this.balance = balance;
+
     }
     public Card(){}
 
@@ -30,14 +37,6 @@ public class Card {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 }
 

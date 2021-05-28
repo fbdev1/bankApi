@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "cl_accounts")
 public class Account {
     @Id
     @Column(name = "id")

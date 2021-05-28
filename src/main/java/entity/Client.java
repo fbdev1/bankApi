@@ -9,10 +9,21 @@ import java.util.Set;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id")
+    @Column(name = "id")
     private long client_id;
     @Column(name = "name")
     private String name;
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "client_id=" + client_id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     @Column(name = "surname")
     private String surname;
     @Column(name = "email")
