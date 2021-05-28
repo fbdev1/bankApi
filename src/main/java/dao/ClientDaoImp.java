@@ -14,15 +14,23 @@ import java.util.List;
 
 public class ClientDaoImp {
 
-    public Client showCards(long id) {
-        Session session = HibernateAnnotationUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Query query = session.createQuery("from Client where id=:id");
-            query.setLong("id", id);
-            Client client = (Client) query.uniqueResult();
-            session.getTransaction().commit();
-            session.close();
-            return client;
+    public List<Client> showCards() {
+        List<Client> list = null;
+        try (Session session = HibernateAnnotationUtil.getSessionFactory().openSession()) {
+            Query<Client> query = session.createQuery("select c from entity.Client c");
+            list = query.list();
+        } catch (Exception e) {
+            System.err.println("Не удалось получить список всех пользователей");
+        }
+        return list;
+
+//        Session session = HibernateAnnotationUtil.getSessionFactory().openSession();
+//            session.beginTransaction();
+//            Query query = session.createSQLQuery("SELECT * FROM CLIENTS WHERE ID = 1");
+//            Client client = (Client) query.getSingleResult();
+//            session.getTransaction().commit();
+//            session.close();
+//            return client;
 //            card = (Card) session.createQuery("select c from Card c where c.id = :id")
 //                    .setParameter("id", id).getSingleResult();
 //        } catch(Exception e){
