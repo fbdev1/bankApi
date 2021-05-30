@@ -6,9 +6,11 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) throws NamingException, SQLException {
-        ClientDaoImp cd = new ClientDaoImp();
-        String cl = cd.showCards(1);
-
-        System.out.println(cl);
+       ClientDaoImp cd = new ClientDaoImp();
+//        String cl = cd.showCards(1);
+//        System.out.println(cl);
+//        cd.makeCardByAccount("testNumber",2);
+//        cd.incBalance(1,9999999);
+        System.out.println( cd.showBalance(1));
     }
 }
