@@ -1,39 +1,51 @@
 package config;
-
+import entity.Account;
+import entity.Card;
+import entity.Client;
+import org.h2.Driver;
+import org.h2.server.web.DbStarter;
+import org.h2.tools.Server;
+import org.h2.util.StringUtils;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-public class HibernateAnnotationUtil {
-        private static SessionFactory sessionFactory=buildSessionFactory();
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import java.sql.DriverManager;
+import java.util.Properties;
 
-        private static SessionFactory buildSessionFactory() {
-                try{
-                        return new Configuration().configure("hibernate-annotation.cfg.xml").buildSessionFactory();
-                }catch (Exception e){
-                        throw new ExceptionInInitializerError(e);
-                }
-        }
+public class HibernateAnnotationUtil{
+    private static SessionFactory sessionFactory;
+    private static String driver =  "org.h2.Driver";
+    private static String userName = "sa";
+    private static String password = "";
+    private static String connectionURL = "jdbc:h2:file:./src/bank;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE";
+    private static String dialect = "org.hibernate.dialect.H2Dialect";
 
-        public static SessionFactory getSessionFactory() {
-                return sessionFactory;
-        }
-//    public static SessionFactory sessionFactory;
-//
-//    public static SessionFactory buildSessionFactory() {
-//
-//        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().
-//                configure("hibernate-annotation.cfg.xml").build();
-//        Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
-//        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
-//        return sessionFactory;
-//    }
-//
 //    public static SessionFactory getSessionFactory() {
-//        if (sessionFactory == null) sessionFactory = buildSessionFactory();
+//        if (sessionFactory == null) {
+//            try {
+//                Configuration configuration = new Configuration();
+//                Properties settings = new Properties();
+//                settings.put(Environment.DRIVER, driver);
+//                settings.put(Environment.URL, connectionURL);
+//                settings.put(Environment.USER, userName);
+//                settings.put(Environment.PASS, password);
+//                settings.put(Environment.DIALECT, dialect);
+//                configuration.setProperties(settings);
+//                configuration.addAnnotatedClass(Card.class);
+//                configuration.addAnnotatedClass(Client.class);
+//                configuration.addAnnotatedClass(Account.class);
+//                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+//                        .applySettings(configuration.getProperties()).build();
+//                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
 //        return sessionFactory;
 //    }
 }

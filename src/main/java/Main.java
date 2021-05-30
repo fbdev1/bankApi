@@ -1,20 +1,14 @@
-
-import dao.ClientDao;
 import dao.ClientDaoImp;
-import entity.Client;
-
-import java.util.List;
+import javax.naming.NamingException;
+import java.sql.SQLException;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NamingException, SQLException {
         ClientDaoImp cd = new ClientDaoImp();
-        List<Client> cl = cd.showCards();
-        System.out.println(cl);
+        String cl = cd.showCards(1);
 
-        System.out.println();
         System.out.println(cl);
-
     }
 }

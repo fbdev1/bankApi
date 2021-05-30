@@ -25,6 +25,11 @@ public class Card {
         this.cardNumber = cardNumber;
 
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Card(){}
 
     public long getId() {
