@@ -2,18 +2,22 @@ package dao;
 
 import com.google.gson.Gson;
 import entity.Card;
+import entity.CompAccount;
+import entity.Company;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDaoImp {
-    static final String JDBC_DRIVER = "org.hibernate.dialect.H2Dialect";
+//    static final String JDBC_DRIVER = "org.hibernate.dialect.H2Dialect";
     static final String DATABASE_URL = "jdbc:h2:~/bank;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE";
     static final String USER = "sa";
     static final String PASSWORD = "";
 
-
-    public String showCards(long id) throws SQLException {
+    public String showCards(long id){
         List<Card> list = new ArrayList<>();
         String SQL = "SELECT * from CARDS where CL_ACCOUNT_ID=?";
         try (Connection conn = DriverManager.
@@ -28,7 +32,7 @@ public class ClientDaoImp {
                 list.add(card);
             }
         } catch (SQLException e) {
-            e.getMessage();
+            System.err.println(e.getMessage());
         }
         return new Gson().toJson(list);
     }
@@ -43,8 +47,17 @@ public class ClientDaoImp {
             prepSt.execute();
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.err.println(e.getMessage());
         }
+//
+//        Session session = HibernateAnnotationUtil.getSessionFactory().openSession();
+//        Transaction transaction = null;
+//        transaction = session.beginTransaction();
+//
+//
+//        session.save(new Card(87,"tetetetetqqqq"));
+//        transaction.commit();
+//        session.close();
     }
 
     public void incBalance(long id, double money) {
@@ -57,12 +70,12 @@ public class ClientDaoImp {
             prepSt.execute();
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.err.println(e.getMessage());
         }
     }
 
     public String showBalance(long id) {
-        String SQL = "SELECT BALANCE FROM CL_ACCOUNTS WHERE CLIENT_ID = ?;";
+        String SQL = "SELECT BALANCE FROM CL_ACCOUNTS WHERE ID = ?;";
         double balance = 0;
         List<String> listOfBalance = new ArrayList<>();
         ResultSet rs;
@@ -73,10 +86,10 @@ public class ClientDaoImp {
             rs = prepSt.executeQuery();
             rs.last();
             balance = rs.getDouble("BALANCE");
-            listOfBalance.add("id: "+id);
-            listOfBalance.add(String.valueOf(balance));
+            listOfBalance.add("acc_id: "+id);
+            listOfBalance.add("Balance: " + balance);
         } catch (SQLException e) {
-            e.getMessage();
+            System.err.println(e.getMessage());
         }
         return new Gson().toJson(listOfBalance);
     }

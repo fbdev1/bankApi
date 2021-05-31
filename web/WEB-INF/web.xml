@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
     <servlet>
         <servlet-name>ClientServlet</servlet-name>
         <servlet-class>controller.ClientServlet</servlet-class>
@@ -13,12 +12,21 @@
         <url-pattern>/cards</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ClientServletBalance</servlet-name>
+        <servlet-class>controller.ClientServletBalance</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClientServletBalance</servlet-name>
+        <url-pattern>/account</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>org.h2.server.web.DbStarter</listener-class>
     </listener>
     <context-param>
         <param-name>db.url</param-name>
-        <param-value>jdbc:h2:~/bank</param-value>
+        <param-value>jdbc:h2:~/bank;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE</param-value>
     </context-param>
     <context-param>
         <param-name>db.user</param-name>
@@ -32,8 +40,6 @@
         <param-name>db.tcpServer</param-name>
         <param-value>-tcpAllowOthers</param-value>
     </context-param>
-
-
 </web-app>
 
 
