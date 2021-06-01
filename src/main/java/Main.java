@@ -1,5 +1,7 @@
 import dao.ClientDaoImp;
 import dao.CompanyDaoImp;
+import service.CompanyService;
+import service.CompanyServiceImp;
 
 import javax.naming.NamingException;
 import java.sql.SQLException;
@@ -14,8 +16,9 @@ public class Main {
 //        cd.makeCardByAccount("testNumber",2);
 //        cd.incBalance(1,9999999);
 //        System.out.println( cd.showBalance(1));
-        CompanyDaoImp cdi = new CompanyDaoImp();
-        cdi.addCompany("test test test test",11111111);
+        CompanyService cs = new CompanyServiceImp();
+//        cs.addCompany("xxxxx",1111111111);
+//        cs.transferFromAccTo(long idFirst, long idSecond, double sum);
 
     }
 }

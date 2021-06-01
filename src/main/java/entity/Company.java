@@ -1,35 +1,39 @@
 package entity;
 
-import javax.persistence.*;
-import java.util.List;
-
-//@Entity
-//@Table(name = "companies")
-
 public class Company {
-//    @Id
-//    @Column(name = "id")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @Column(name="name")
     private String name;
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List <CompAccount> compAccounts;
+    private CompAccount compAccount;
 
-//    public Company(String name,List<CompAccount> compAccounts) {
-//        this.compAccounts = compAccounts;
-//        this.name = name;
-//    }
+    public Company(String name) {
+        this.name = name;
+    }
 
-    public Company() {
+    public CompAccount getCompAccount() {
+        return compAccount;
+    }
+
+    public void setCompAccount(CompAccount compAccount) {
+        this.compAccount = compAccount;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Company() {
     }
 
     @Override

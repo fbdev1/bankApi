@@ -1,8 +1,10 @@
 package service;
 import java.util.Random;
+
+import dao.ClientDao;
 import dao.ClientDaoImp;
 public class ClientServiceImp implements ClientService {
-    private static final ClientDaoImp cdi = new ClientDaoImp();
+    private static final ClientDao cdi = new ClientDaoImp();
 
     public void makeCardByAccount(long id) {
         StringBuilder cardNumber = new StringBuilder();

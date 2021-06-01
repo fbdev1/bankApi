@@ -13,22 +13,22 @@ public class ClientServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        try (PrintWriter out = response.getWriter()){
-        out.print(csi.showCards(Long.parseLong(request.getParameter("acc_id"))));
-        out.flush();
-    }catch (IOException | NumberFormatException e){
+        try (PrintWriter out = response.getWriter()) {
+            out.print(csi.showCards(Long.parseLong(request.getParameter("acc_id"))));
+            out.flush();
+        } catch (IOException | NumberFormatException e) {
             System.err.println(e.getMessage());
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        try{
-        csi.makeCardByAccount(Long.parseLong(request.getParameter("acc_id")));
-        } catch (NumberFormatException e){
+        try {
+            csi.makeCardByAccount(Long.parseLong(request.getParameter("acc_id")));
+        } catch (NumberFormatException e) {
             System.err.println(e.getMessage());
         }
-        this.doGet(request,response);
+        this.doGet(request, response);
     }
 
 

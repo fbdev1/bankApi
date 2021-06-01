@@ -1,27 +1,20 @@
 package dao;
 
 import com.google.gson.Gson;
+import config.ConnectionUtil;
 import entity.Card;
-import entity.CompAccount;
-import entity.Company;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDaoImp {
-//    static final String JDBC_DRIVER = "org.hibernate.dialect.H2Dialect";
-    static final String DATABASE_URL = "jdbc:h2:~/bank;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE";
-    static final String USER = "sa";
-    static final String PASSWORD = "";
+public class ClientDaoImp implements ClientDao{
 
-    public String showCards(long id){
+    public static final ConnectionUtil connUtil= new ConnectionUtil();
+
+    public String showCards(long id) {
         List<Card> list = new ArrayList<>();
         String SQL = "SELECT * from CARDS where CL_ACCOUNT_ID=?";
-        try (Connection conn = DriverManager.
-                getConnection(DATABASE_URL, USER, PASSWORD)) {
+        try (Connection conn = connUtil.getConnect()) {
             PreparedStatement prepSt = conn.prepareStatement(SQL);
             prepSt.setLong(1, id);
             ResultSet rs = prepSt.executeQuery();
@@ -39,8 +32,7 @@ public class ClientDaoImp {
 
     public void makeCardByAccount(String cardNumber, long id) {
         String SQL = "INSERT INTO PUBLIC.CARDS (CARD_NUMBER, CL_ACCOUNT_ID) VALUES (?,?);";
-        try (Connection conn = DriverManager.
-                getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection conn = connUtil.getConnect();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
             prepSt.setString(1, cardNumber);
             prepSt.setLong(2, id);
@@ -49,26 +41,15 @@ public class ClientDaoImp {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-//
-//        Session session = HibernateAnnotationUtil.getSessionFactory().openSession();
-//        Transaction transaction = null;
-//        transaction = session.beginTransaction();
-//
-//
-//        session.save(new Card(87,"tetetetetqqqq"));
-//        transaction.commit();
-//        session.close();
     }
 
     public void incBalance(long id, double money) {
         String SQL = "UPDATE PUBLIC.CL_ACCOUNTS t SET t.BALANCE = t.BALANCE + ? WHERE t.ID = ?;";
-        try (Connection conn = DriverManager.
-                getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection conn = connUtil.getConnect();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
             prepSt.setDouble(1, money);
             prepSt.setLong(2, id);
             prepSt.execute();
-
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -79,14 +60,13 @@ public class ClientDaoImp {
         double balance = 0;
         List<String> listOfBalance = new ArrayList<>();
         ResultSet rs;
-        try (Connection conn = DriverManager.
-                getConnection(DATABASE_URL, USER, PASSWORD);
+        try (Connection conn = connUtil.getConnect();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
             prepSt.setLong(1, id);
             rs = prepSt.executeQuery();
             rs.last();
             balance = rs.getDouble("BALANCE");
-            listOfBalance.add("acc_id: "+id);
+            listOfBalance.add("acc_id: " + id);
             listOfBalance.add("Balance: " + balance);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
