@@ -1,17 +1,18 @@
 package entity;
 
-import javax.persistence.*;
+import java.util.Objects;
 
-@Entity
-@Table(name = "cards")
 public class Card {
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
     private long id;
-    @Column(name = "card_Number")
     private String cardNumber;
 
+    public Card( String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+    public Card(long id, String cardNumber) {
+        this.id = id;
+        this.cardNumber = cardNumber;
+    }
 
     @Override
     public String toString() {
@@ -20,11 +21,17 @@ public class Card {
                 ", cardNumber='" + cardNumber + '\'' +
                 '}';
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return id == card.id && Objects.equals(cardNumber, card.cardNumber);
+    }
 
-    public Card(int id, String cardNumber) {
-        this.id = id;
-        this.cardNumber = cardNumber;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cardNumber);
     }
 
     public void setId(long id) {
@@ -36,6 +43,7 @@ public class Card {
     public long getId() {
         return id;
     }
+
 
     public String getCardNumber() {
         return cardNumber;

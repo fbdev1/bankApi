@@ -1,33 +1,18 @@
 package entity;
-
-import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
-
-@Entity
-@Table(name = "clients")
 public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long client_id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "surname")
-    private String surname;
-    @Column(name = "email")
-    private String email;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Account> accountList;
 
+    private long client_id;
+    private String name;
+    private String surname;
+    private String email;
+    private List<Account> accountList;
     public List<Account> getAccountList() {
         return accountList;
     }
-
     public void setAccountList(List<Account> accountList) {
         this.accountList = accountList;
     }
-
 
     @Override
     public String toString() {

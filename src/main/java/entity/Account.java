@@ -1,19 +1,9 @@
 package entity;
 
-import javax.persistence.*;
-import java.util.Set;
-
-@Entity
-@Table(name = "cl_accounts")
 public class Account {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
-    @Column
     private String number;
-    @ManyToOne
-    @JoinColumn(name = "client_id")
     Client client;
 
     public Account(String number, Client client) {

@@ -5,9 +5,9 @@ import entity.Card;
 import java.util.List;
 
 public interface ClientDao {
-    String showCards(long id);
-    void makeCardByAccount(String cardNumber, long id);
-    void incBalance(long id, double money);
-    String showBalance(long id);
+    List<Card> showCardsByAccId(long id);
+    void makeCardByAccId(String cardNumber, long id);
+    void incBalanceByAccId(long id, double money);
+    String showBalanceByAccId(long id);
 
 }

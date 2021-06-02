@@ -1,8 +1,11 @@
 package service;
+import java.util.List;
 import java.util.Random;
-
+import com.google.gson.Gson;
 import dao.ClientDao;
 import dao.ClientDaoImp;
+import entity.Card;
+
 public class ClientServiceImp implements ClientService {
     private static final ClientDao cdi = new ClientDaoImp();
 
@@ -16,29 +19,29 @@ public class ClientServiceImp implements ClientService {
                     .append(new Random().nextInt(diff + 1)+min + " ")
                     .append(new Random().nextInt(diff + 1)+min + " ")
                     .append(new Random().nextInt(diff + 1)+min);
-            cdi.makeCardByAccount(cardNumber.toString(), id);
+            cdi.makeCardByAccId(cardNumber.toString(), id);
     }
 
     @Override
     public String showCards(long id) {
-        String s = cdi.showCards(id);
-        if(s.equals("[]")){
+        List<Card> list = cdi.showCardsByAccId(id);
+        if(list.isEmpty()){
             return "Account not found: " + id;
         }
-        return s;
+        return new Gson().toJson(list);
     }
 
     @Override
     public void incBalance(long id, double money) {
-        cdi.incBalance(id, money);
+        cdi.incBalanceByAccId(id, money);
     }
 
     @Override
     public String showBalance(long id) {
-        String s = cdi.showBalance(id);
-        if(s.equals("[]")){
+        String s = cdi.showBalanceByAccId(id);
+        if(s.equals("")){
             return "Account not found: " + id;
         }
-        return s;
+        return new Gson().toJson(s);
     }
 }

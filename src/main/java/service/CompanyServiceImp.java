@@ -1,9 +1,11 @@
 package service;
 
-import dao.ClientDaoImp;
+import com.google.gson.Gson;
 import dao.CompanyDao;
 import dao.CompanyDaoImp;
+import entity.Company;
 
+import java.util.List;
 import java.util.Random;
 
 public class CompanyServiceImp implements CompanyService {
@@ -25,10 +27,10 @@ public class CompanyServiceImp implements CompanyService {
 
     }
     public String showCompanies(){
-       String s = cdi.showCompanies();
-        if(s.equals("[]")){
+       List<Company> s = cdi.showCompanies();
+        if(s.isEmpty()){
             return "Companies did not found";
         }
-       return s;
+       return new Gson().toJson(s);
     }
 }

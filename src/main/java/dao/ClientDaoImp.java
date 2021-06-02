@@ -7,14 +7,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDaoImp implements ClientDao{
+public class ClientDaoImp implements ClientDao {
 
-    public static final ConnectionUtil connUtil= new ConnectionUtil();
-
-    public String showCards(long id) {
+    public List<Card> showCardsByAccId(long id) {
         List<Card> list = new ArrayList<>();
         String SQL = "SELECT * from CARDS where CL_ACCOUNT_ID=?";
-        try (Connection conn = connUtil.getConnect()) {
+        try (Connection conn = ConnectionUtil.getConnection()) {
             PreparedStatement prepSt = conn.prepareStatement(SQL);
             prepSt.setLong(1, id);
             ResultSet rs = prepSt.executeQuery();
@@ -27,12 +25,12 @@ public class ClientDaoImp implements ClientDao{
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return new Gson().toJson(list);
+        return list;
     }
 
-    public void makeCardByAccount(String cardNumber, long id) {
+    public void makeCardByAccId(String cardNumber, long id) {
         String SQL = "INSERT INTO PUBLIC.CARDS (CARD_NUMBER, CL_ACCOUNT_ID) VALUES (?,?);";
-        try (Connection conn = connUtil.getConnect();
+        try (Connection conn = ConnectionUtil.getConnection();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
             prepSt.setString(1, cardNumber);
             prepSt.setLong(2, id);
@@ -43,35 +41,34 @@ public class ClientDaoImp implements ClientDao{
         }
     }
 
-    public void incBalance(long id, double money) {
+    public void incBalanceByAccId(long id, double money) {
         String SQL = "UPDATE PUBLIC.CL_ACCOUNTS t SET t.BALANCE = t.BALANCE + ? WHERE t.ID = ?;";
-        try (Connection conn = connUtil.getConnect();
+        try (Connection conn = ConnectionUtil.getConnection();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
             prepSt.setDouble(1, money);
             prepSt.setLong(2, id);
             prepSt.execute();
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public String showBalance(long id) {
+    public String showBalanceByAccId(long id) {
         String SQL = "SELECT BALANCE FROM CL_ACCOUNTS WHERE ID = ?;";
-        double balance = 0;
+        String balance="";
         List<String> listOfBalance = new ArrayList<>();
         ResultSet rs;
-        try (Connection conn = connUtil.getConnect();
+        try (Connection conn = ConnectionUtil.getConnection();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
             prepSt.setLong(1, id);
             rs = prepSt.executeQuery();
             rs.last();
-            balance = rs.getDouble("BALANCE");
-            listOfBalance.add("acc_id: " + id);
-            listOfBalance.add("Balance: " + balance);
+            balance = String.valueOf(rs.getDouble("BALANCE"));
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return new Gson().toJson(listOfBalance);
+        return balance;
     }
 
 }

@@ -29,12 +29,21 @@ public class CompanyServlet extends HttpServlet {
             out.print(csi.showCompanies());
             out.flush();
         } catch (IOException | NumberFormatException e) {
-            out.print("Incorrect parameter"+ e.getMessage());
+            out.print("Incorrect parameter "+ e.getMessage());
             out.flush();
+        }finally {
+            if(out != null) {
+                out.close();
+            }
         }
     }
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try(PrintWriter out = response.getWriter()){
+            out.print(csi.showCompanies());
+            out.flush();
+        }catch (IOException e){
+            System.err.println(e.getMessage());
+        }
     }
 }
