@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "ClientServlet", value = "/cards")
 public class ClientServlet extends HttpServlet {
+
     private static final ClientService csi = new ClientServiceImp();
 
     @Override

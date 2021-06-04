@@ -1,5 +1,4 @@
 package config;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,10 +9,8 @@ public class ConnectionUtil {
     private static String password = "";
     private static Connection conn = null;
 
-    public static Connection getConnection(){
-//        if(conn == null) {
+    public static Connection getConnection() {
             createConnection();
-//        }
         return conn;
     }
 

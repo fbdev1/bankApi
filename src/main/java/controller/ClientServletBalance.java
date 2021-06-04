@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "ClientServletBalance", value = "/account")
 public class ClientServletBalance extends HttpServlet {
+
     private static final ClientService csi = new ClientServiceImp();
 
     @Override

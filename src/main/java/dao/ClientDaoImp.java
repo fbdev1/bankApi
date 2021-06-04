@@ -1,6 +1,5 @@
 package dao;
 
-import com.google.gson.Gson;
 import config.ConnectionUtil;
 import entity.Card;
 import java.sql.*;
@@ -57,7 +56,6 @@ public class ClientDaoImp implements ClientDao {
     public String showBalanceByAccId(long id) {
         String SQL = "SELECT BALANCE FROM CL_ACCOUNTS WHERE ID = ?;";
         String balance="";
-        List<String> listOfBalance = new ArrayList<>();
         ResultSet rs;
         try (Connection conn = ConnectionUtil.getConnection();
              PreparedStatement prepSt = conn.prepareStatement(SQL)) {
